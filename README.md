@@ -8,4 +8,6 @@ My VIM environment
 * Start `vim` and run `:PluginInstall` for Vundle to do its magic. (Vundle clones all the defined plugins from github to `~/.vim/bundle`) 
 * Follow instructions in https://github.com/Valloric/YouCompleteMe/ to compile YCM with the preferred language support.
 
-Done.
+# Dependencies
+* Vundle VIM plugin. Available through https://github.com/gmarik/Vundle.vim
+* ack, a programmer's replacement for grep. Available at http://beyondgrep.com
