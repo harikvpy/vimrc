@@ -23,6 +23,13 @@ Plugin 'vim-scripts/statusline.vim'
 Plugin 'jlanzarotta/bufexplorer'
 " contains a function to refresh firefox browser page
 Plugin 'harikvpy/refreshbrowser'
+" snippets to expand shortcuts into code
+Plugin 'SirVer/ultisnips'
+" snippents themselves
+Plugin 'honza/vim-snippets'
+" python/django hotkey reference
+Plugin 'xolox/vim-misc.git'
+Plugin 'xolox/vim-pyref.git'
 
 " " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -30,7 +37,7 @@ filetype plugin indent on    " required
 
 colorscheme desert          " My preferred colorscheme
 set nu                      " show line numbers on left
-set columns=110 lines=50    " set default window size
+set columns=120 lines=60    " set default window size
 syntax on                   " turn on syntax highlighting
 set nowrap                  " turn off long line wrapping
 set ruler                   " show ruler at the bottom of the buffer
@@ -56,6 +63,7 @@ set hlsearch                " highlight all search results
 set incsearch               " highlight search matches as pattern is being typed
 set lbr
 set tw=500                 " override default text width of 78 to 500
+set colorcolumn=81
 
 let mapleader=","           " remap <leader> key to comma
 let g:mapleader=","
@@ -77,6 +85,12 @@ map <C-l> <C-W>l
 " ignore itermediate files
 set wildignore=*.o,*.~,*.pyc
 
+" Enable persistent undo
+set undofile
+set undodir=$HOME/.vim/undo
+set undolevels=1000
+set undoreload=10000
+
 " Plugin configurations and customization
 
 " NERDTree
@@ -89,15 +103,15 @@ let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$',  '\~$']
 let NERDTreeShowBookmarks=1
 " always highlight cursor line
 let NERDTreeHighlightCursorline=1
-" default view size, 20 columns
-let NERDTreeWinSize=20
+" default view size, 35 columns
+let NERDTreeWinSize=33
 " Don't use extended characters for arrowheads for the tree
 let NERDTreeDirArrows=0
 " shortcut for NERDTree
 nmap <leader>n :NERDTreeToggle<CR>
 
 " Buffer explorer
-let g:bufExplorerSortBy='name'   " sort by the buffer's name
+let g:bufExplorerSortBy='fullpath'   " sort by the buffer's name
 let g:bufExplorerReverseSort=0
 " shortcut to see bufexplorer window
 nmap <leader>b :BufExplorer<CR>
@@ -108,8 +122,15 @@ nmap <leader>f :MRU<CR>
 " shortcut for Ack macro
 nmap <leader>a :Ack!<CR>
 
-" shortcut to save current buffer, close all windows and quit
-nmap <leader>q :mksession! ~/.vimsession<CR>:wqa<CR>
+" cycle through buffers
+nmap <Tab> :bnext<CR>
+nmap <S-Tab> :bprevious<CR>
+
+" ultisnips expand trigger
+let g:UltiSnipsExpandTrigger="<F4>"
+let	g:snips_author='Hari Mahadevan'
+let g:snips_email='harikvpy@gmail.com'
+let g:snips_github='https://github.com/harikvpy'
 
 " reload statusline plugin whenever colorscheme is changed
 autocmd! ColorScheme * source ~/.vim/bundle/statusline.vim/plugin/statusline.vim
@@ -131,9 +152,13 @@ endfunction
 
 call SetStatuslineColors()
 
-" Function restore previously saved vim session.
-" Session is restored, only if vim is started without specifying any
-" files to be edited in its commandline.
+" Restoring session through the above causes the colorful statusline 
+" to lose its colors. So we need to reload it using an autocmd.
+" Note how we use a function to do this. This seems to work consistently well.
+autocmd VimEnter * call ReloadStatusline()
+
+" Function restores previously saved vim session.
+" Session is restored only if vim is started without any file arguments.
 function! RestoreSession()
     let filespecified = 0
     for arg in argv()
@@ -145,16 +170,30 @@ function! RestoreSession()
     if filespecified == 0
         " if no files were specified in commandline, load previous session
         execute 'source ~/.vimsession'
+        " open NERDTree as well
+        NERDTree
+        " go to last accessed window (equivalent to CTRL-W p)
+        wincmd p
     endif
+    call ReloadStatusline()
 endfunction
 
 " Restore session on startup
 autocmd VimEnter * call RestoreSession()
 
-" Restoring session through the above causes the colorful statusline 
-" to lose its colors. So we need to reload it using an autocmd.
-" Note how we use a function to do this. This seems to work consistently well.
-autocmd VimEnter * call ReloadStatusline()
+" Function to quit VIM while saving the current session.
+" Note that if NERDTree was open closes it first before saving session.
+" This will avoid the nasty NERDTree restoration problem when VIM auto
+" reloads the previous session during startup.
+function! QuitSavingSession()
+    NERDTreeClose 
+    mksession! ~/.vimsession
+    :wqa<CR>
+endfunction
+
+" shortcut to quit VIM while saving current session, which will be restored
+" if VIM is started without any arguments
+nmap <leader>q :call QuitSavingSession()<CR>
 
 " function to insert UUID at the current cursor position
 function! InsertUUID()
@@ -166,6 +205,10 @@ EOF
 endfunction
 " now map a key to invoke the above function
 nmap <leader>g :call InsertUUID()<CR>
+
+" hotkey for pyref context sensitive help
+let g:pyref_python = '/usr/share/doc/python2.7/html'
+let g:pyref_mapping = 'H'
 
 " Function to highlight current line.
 "
@@ -194,4 +237,4 @@ endfunction
 autocmd BufWrite *.py :call DeleteTrailingBlanks()
 
 " keyboard shortcut to refresh firefox page
-nmap <leader>r :call RefreshFirefox()<CR>
+nmap <leader>r :call RefreshBrowser()<CR>
