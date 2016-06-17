@@ -30,6 +30,12 @@ Plugin 'honza/vim-snippets'
 " python/django hotkey reference
 Plugin 'xolox/vim-misc.git'
 Plugin 'xolox/vim-pyref.git'
+" Django plugin for Dmodels, Durls, Dviews
+Plugin 'jmcomets/vim-pony.git'
+" Grep from inside VIM, but one that supports replace as well
+Plugin 'dkprice/vim-easygrep.git'
+" Simple tasklist that accumulates all TODO & FIXME comments from source
+Plugin 'vim-scripts/TaskList.vim'
 
 " " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -37,7 +43,7 @@ filetype plugin indent on    " required
 
 colorscheme desert          " My preferred colorscheme
 set nu                      " show line numbers on left
-set columns=120 lines=60    " set default window size
+set columns=85 lines=44     " set default window size
 syntax on                   " turn on syntax highlighting
 set nowrap                  " turn off long line wrapping
 set ruler                   " show ruler at the bottom of the buffer
@@ -62,7 +68,7 @@ set ignorecase              " ignore case while searching
 set hlsearch                " highlight all search results
 set incsearch               " highlight search matches as pattern is being typed
 set lbr
-set tw=500                 " override default text width of 78 to 500
+set tw=500                  " change default text width of 78 to 79
 set colorcolumn=81
 
 let mapleader=","           " remap <leader> key to comma
@@ -107,6 +113,8 @@ let NERDTreeHighlightCursorline=1
 let NERDTreeWinSize=33
 " Don't use extended characters for arrowheads for the tree
 let NERDTreeDirArrows=0
+" auto close NERDTree upon opening a file
+let NERDTreeQuitOnOpen=1
 " shortcut for NERDTree
 nmap <leader>n :NERDTreeToggle<CR>
 
