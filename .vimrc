@@ -43,7 +43,9 @@ filetype plugin indent on    " required
 
 colorscheme desert          " My preferred colorscheme
 set nu                      " show line numbers on left
-set columns=85 lines=44     " set default window size
+set columns=85              " column size 
+"set lines=51               " lines depends on the display and its display 
+                            " resolution. Therefore we defer that to .localvimrc
 syntax on                   " turn on syntax highlighting
 set nowrap                  " turn off long line wrapping
 set ruler                   " show ruler at the bottom of the buffer
@@ -243,6 +245,11 @@ function! DeleteTrailingBlanks()
 endfunction
 " Force the above function to be invoked when python buffers are written
 autocmd BufWrite *.py :call DeleteTrailingBlanks()
+
+" Read local settings for any machine specific settings
+if filereadable(glob("~/.localvimrc"))
+    source  ~/.localvimrc
+endif
 
 " keyboard shortcut to refresh firefox page
 nmap <leader>r :call RefreshBrowser()<CR>
