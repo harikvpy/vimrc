@@ -36,6 +36,8 @@ Plugin 'jmcomets/vim-pony.git'
 Plugin 'dkprice/vim-easygrep.git'
 " Simple tasklist that accumulates all TODO & FIXME comments from source
 Plugin 'vim-scripts/TaskList.vim'
+" Javascript settings
+Plugin 'pangloss/vim-javascript'
 
 " " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -250,6 +252,9 @@ autocmd BufWrite *.py :call DeleteTrailingBlanks()
 if filereadable(glob("~/.localvimrc"))
     source  ~/.localvimrc
 endif
+
+" set tabstop/shiftwidth space for JS files to 2
+autocmd Filetype javascript setlocal ts=2 sw=2
 
 " keyboard shortcut to refresh firefox page
 nmap <leader>r :call RefreshBrowser()<CR>
