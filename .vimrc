@@ -267,6 +267,7 @@ endif
 
 " set tabstop/shiftwidth space for JS files to 2
 autocmd Filetype javascript setlocal ts=2 sw=2
+autocmd Filetype markdown setlocal ts=5 sw=5 noexpandtab
 
 " keyboard shortcut to refresh firefox page
 nmap <leader>r :call RefreshBrowser()<CR>
