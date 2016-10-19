@@ -178,8 +178,9 @@ set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+let g:syntastic_mode_map = { "mode": "passive" }
 
 " Function restores previously saved vim session.
 " Session is restored only if vim is started without any file arguments.
