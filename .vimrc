@@ -40,6 +40,9 @@ Plugin 'vim-scripts/TaskList.vim'
 Plugin 'pangloss/vim-javascript'
 " Syntastic syntax checker
 Plugin 'scrooloose/syntastic'
+" JSON formatter
+Plugin 'elzr/vim-json'
+
 
 " " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -76,6 +79,7 @@ set incsearch               " highlight search matches as pattern is being typed
 set lbr
 set tw=500                  " change default text width of 78 to 79
 set colorcolumn=81
+set foldmethod=indent
 
 let mapleader=","           " remap <leader> key to comma
 let g:mapleader=","
@@ -141,10 +145,18 @@ nmap <Tab> :bnext<CR>
 nmap <S-Tab> :bprevious<CR>
 
 " ultisnips expand trigger
-let g:UltiSnipsExpandTrigger="<F4>"
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsUsePythonVersion = 3
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+
 let	g:snips_author='Hari Mahadevan'
 let g:snips_email='harikvpy@gmail.com'
 let g:snips_github='https://github.com/harikvpy'
+
+" Load django snippets for every python file
+autocmd Filetype python UltiSnipsAddFiletypes django
+autocmd Filetype html UltiSnipsAddFiletypes htmldjango
 
 " reload statusline plugin whenever colorscheme is changed
 autocmd! ColorScheme * source ~/.vim/bundle/statusline.vim/plugin/statusline.vim
