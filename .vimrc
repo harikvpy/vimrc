@@ -21,8 +21,6 @@ Plugin 'mileszs/ack.vim'
 Plugin 'vim-scripts/statusline.vim'
 " buffer explorer to quickly navigate between various edit buffers
 Plugin 'jlanzarotta/bufexplorer'
-" contains a function to refresh firefox browser page
-Plugin 'harikvpy/refreshbrowser'
 " snippets to expand shortcuts into code
 Plugin 'SirVer/ultisnips'
 " snippents themselves
@@ -42,7 +40,6 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'scrooloose/syntastic'
 " JSON formatter
 Plugin 'elzr/vim-json'
-
 
 " " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -124,7 +121,7 @@ let NERDTreeWinSize=20
 " Don't use extended characters for arrowheads for the tree
 let NERDTreeDirArrows=0
 " auto close NERDTree upon opening a file
-let NERDTreeQuitOnOpen=1
+"let NERDTreeQuitOnOpen=1
 " shortcut for NERDTree
 nmap <leader>n :NERDTreeToggle<CR>
 
@@ -293,5 +290,3 @@ endif
 autocmd Filetype javascript setlocal ts=2 sw=2
 autocmd Filetype markdown setlocal ts=5 sw=5 noexpandtab
 
-" keyboard shortcut to refresh firefox page
-nmap <leader>r :call RefreshBrowser()<CR>
