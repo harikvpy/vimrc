@@ -50,8 +50,8 @@ filetype plugin indent on    " required
 
 colorscheme desert          " My preferred colorscheme
 set nu                      " show line numbers on left
-set columns=85              " column size 
-"set lines=51               " lines depends on the display and its display 
+set columns=86              " column size 
+set lines=47                " lines depends on the display and its display 
                             " resolution. Therefore we defer that to .localvimrc
 syntax on                   " turn on syntax highlighting
 set nowrap                  " turn off long line wrapping
@@ -120,7 +120,7 @@ let NERDTreeShowBookmarks=1
 " always highlight cursor line
 let NERDTreeHighlightCursorline=1
 " default view size, 35 columns
-let NERDTreeWinSize=33
+let NERDTreeWinSize=20
 " Don't use extended characters for arrowheads for the tree
 let NERDTreeDirArrows=0
 " auto close NERDTree upon opening a file
@@ -146,7 +146,7 @@ nmap <S-Tab> :bprevious<CR>
 
 " ultisnips expand trigger
 let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsUsePythonVersion = 3
+" let g:UltiSnipsUsePythonVersion = 3
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
@@ -242,6 +242,17 @@ EOF
 endfunction
 " now map a key to invoke the above function
 nmap <leader>g :call InsertUUID()<CR>
+
+" function to create/refresh the project tags. Depends on 
+" .ctags config file in the project root to specify excluded 
+" files/folders as well as other settings.
+function! RefreshTags()
+py << EOF
+import subprocess
+subprocess.call(["ctags", "-R", "."])
+EOF
+endfunction
+nmap <leader>h :call RefreshTags()<CR>
 
 " hotkey for pyref context sensitive help
 let g:pyref_python = '/usr/share/doc/python2.7/html'
