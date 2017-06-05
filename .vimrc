@@ -37,7 +37,7 @@ Plugin 'vim-scripts/TaskList.vim'
 " Javascript settings
 Plugin 'pangloss/vim-javascript'
 " Syntastic syntax checker
-Plugin 'scrooloose/syntastic'
+Plugin 'vim-syntastic/syntastic'
 " JSON formatter
 Plugin 'elzr/vim-json'
 
@@ -47,7 +47,7 @@ filetype plugin indent on    " required
 
 colorscheme desert          " My preferred colorscheme
 set nu                      " show line numbers on left
-set columns=86              " column size 
+set columns=108             " column size 
 set lines=47                " lines depends on the display and its display 
                             " resolution. Therefore we defer that to .localvimrc
 syntax on                   " turn on syntax highlighting
@@ -64,12 +64,13 @@ set magic                   " turn on regular expressions
 set nobackup                " No need for backups with robust SCMs in place
 set nowb                    " modern file systems makes write backup redundant
 set noswapfile              " swapfiles are not necessary either
-set smarttab                " insert 'shiftwidth' spaces when <tab>ed in front of a line
 set shiftwidth=4            " number of spaces to insert at the beginning of a line for <tab>
 set tabstop=4               " my preferred tabstop size
+set softtabstop=4
+set smarttab                " insert 'shiftwidth' spaces when <tab>ed in front of a line
 set expandtab               " expand all tabs to equivalent spaces
 set autoindent              " automatic indentation on pressing Enter
-set smartindent             " smart indentation
+set nosmartindent           " smart indentation
 set ignorecase              " ignore case while searching
 set hlsearch                " highlight all search results
 set incsearch               " highlight search matches as pattern is being typed
@@ -189,7 +190,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
-let g:syntastic_mode_map = { "mode": "passive" }
+let g:syntastic_mode_map = { "mode": "active" }
+let g:syntastic_python_checkers = ['pylint']
+let g:syntastic_python_pylint_args = "--rcfile=./.pylintrc"
 
 " Function restores previously saved vim session.
 " Session is restored only if vim is started without any file arguments.
