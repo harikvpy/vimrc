@@ -267,8 +267,8 @@ let g:pyref_mapping = 'H'
 function s:HighlightCurrentLine()
     set cursorline
     setlocal cursorline
-    hi cursorline cterm=none ctermbg=magenta ctermfg=white
-    hi cursorcolumn cterm=none ctermbg=magenta ctermfg=white
+    hi cursorline cterm=none ctermbg=gray ctermfg=black
+    hi cursorcolumn cterm=none ctermbg=gray ctermfg=black
 endfunction
 autocmd VimEnter * call s:HighlightCurrentLine()
 
